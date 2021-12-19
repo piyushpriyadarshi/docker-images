@@ -5,23 +5,23 @@ services:
   mysql:
     image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3301:3306"
     volumes:
-      - ./storage/mysql/data:/var/lib/mysql
+      - ./storage1/mysql/data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test_pass
+      MYSQL_ROOT_PASSWORD: PNYpny29@12345
+      MYSQL_DATABASE: awsomecoder
+      MYSQL_USER: piyush
+      MYSQL_PASSWORD: piyush@99
       MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
 
   ###Redis Container
-  redis:
-    image: redis:alpine
-    command: redis-server --appendonly yes
-    ports:
-      - '6379:6379'
-    volumes:
-        - ./storage/redis/data:/data
-    restart: always
+  #redis:
+   # image: redis:alpine
+   # command: redis-server --appendonly yes
+    #ports:
+     # - '6379:6379'
+    #volumes:
+ #       - ./storage/redis/data:/data
+    #restart: always
   
