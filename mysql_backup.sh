@@ -7,12 +7,9 @@ GZIP=$(which gzip)
 MYSQLDUMP=$(which mysqldump)
 
 ### MySQL Server Login info ###
-MDB=$MYSQL_DATABASE
-MHOST=$MYSQL_CONTAINER_NAME
-MPASS=$MYSQL_ROOT_PASSWORD
+MDB=awsomecoder
+MPASS=PNYpny29@12345
 MUSER=root
 
-[ ! -d "$BACKUP_FOLDER" ] && mkdir --parents $BACKUP_FOLDER
-
 FILE=${BACKUP_FOLDER}/backup-${NOW}.sql.gz
-$MYSQLDUMP -h $MHOST -u $MUSER -p${MPASS} --databases $MDB | $GZIP -9 > $FILE
+$MYSQLDUMP -u $MUSER -p${MPASS} --databases $MDB | $GZIP -9 > $FILE
