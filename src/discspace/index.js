@@ -1,7 +1,7 @@
 
 import cp from 'child_process'
 const diskspace=(mountedon,chain)=>{
-    var ps   = cp.spawn("df", ["-BK" , mountedon]);
+    var ps   = cp.spawn("df", ["-h" , mountedon]);
     var _ret = "";
 
     ps.stdout.on("data", function(data){

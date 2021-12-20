@@ -1,6 +1,8 @@
 import cp from 'child_process';
 import os from 'os';
 import dotenv from 'dotenv';
+import ejs from 'ejs';
+import sgmail from'@sendgrid/mail';
 import diskspace from './discspace/index.js';
 dotenv.config();
 
@@ -48,16 +50,56 @@ function getDiskInfo(){
        });
     })
 }
+
+async function getFrontendStatus(){
+    return new Promise((resolve,reject)=>{
+       
+    })
+}
+
+async function getBackendStatus(){
+    return new Promise((resolve,reject)=>{
+        
+    })
+}
 async function startProcess(){
     try {
         //start mysql backup
         // const result = await takeMysqlBackup();
-        const result = await getMemoryFootPrints();
-        getDiskInfo();
-        console.log(result); 
+        // const result = await getMemoryFootPrints();
+        // getDiskInfo();
+        // console.log(result); 
+
+
+        // const res=[{name:'Databases',status:'running'},{name:'Redis',status:'running'},{name:'Backend',status:'stoped'}]
+        // const str= await ejs.renderFile('src/template/alert.ejs',{serviceArr:res});
+        // console.log(str);
+
+        sendAlertMail();
+        
     } catch (error) {
         console.log(error);
     }
+}
+
+async function sendAlertMail(){
+    const res=[{name:'Databases',status:'running'},{name:'Redis',status:'running'},{name:'Backend',status:'stoped'}]
+    const htmlString= await ejs.renderFile('src/template/alert.ejs',{serviceArr:res});
+    sgmail.setApiKey('');
+    const msg = {
+        to: 'piyush@piyushpriyadarshi.com', // Change to your recipient
+        from: 'priyadarship4@gmail.com', // Change to your verified sender
+        subject: 'Servers Alert ',
+        html: htmlString,
+      }
+      sgmail
+        .send(msg)
+        .then(() => {
+          console.log('Email sent')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
 }
 
 

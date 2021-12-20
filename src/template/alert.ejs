@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alert Mail</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      .danger {
+        background-color: red;
+      }
+      .success {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Services</th>
+        <th>Status</th>
+      </tr>
+      <% serviceArr.forEach(function(service) {%>
+      <tr class="<%= service.status=== 'running' ? 'success' : 'danger' %>">
+        <td>
+          <%= service.name %>
+        </td>
+        <td><%= service.status %></td>
+      </tr>
+      <% }); %>
+    </table>
+  </body>
+</html>
