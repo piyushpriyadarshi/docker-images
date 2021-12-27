@@ -11,7 +11,7 @@ class Mailer {
           host: "smtp.gmail.com",
           auth: {
             user: "awsomecoders@gmail.com",
-            pass: "PIYpiy29@123",
+            pass: process.env.MAIL_PASSWORD,
           },
         })
       );
