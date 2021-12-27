@@ -7,6 +7,7 @@ import diskspace from "./discspace/index.js";
 import { checkOnlineStatus, getData } from "./utils/apiUtils.js";
 import cron from "node-cron";
 import { sendAlertMail } from "./mailer/mailUtils.js";
+import { fail } from "assert";
 dotenv.config();
 
 // console.log(process.env.DATABASE_PASSWORD);
@@ -61,7 +62,7 @@ function getDiskInfo() {
 
 async function getFrontendStatus() {
   return new Promise((resolve, reject) => {
-    checkOnlineStatus("https://staging.awsomecoders.com/", "Frontend")
+    checkOnlineStatus("https://staging.awsomecoders.co", "Frontend")
       .then((data) => resolve(data))
       .catch((err) => reject(err));
   });
@@ -127,17 +128,20 @@ async function checkSatatusAndSendAlert() {
     getMemoryFootPrints(),
   ];
   Promise.allSettled(promises).then(async (results) => {
-    const failedServices = [];
+    let failedServices = [];
     const allGoodServices = [];
     results.forEach((result) =>
       result.status === "fulfilled"
         ? allGoodServices.push(result)
         : failedServices.push(result)
     );
-
-    console.log(allGoodServices);
+    console.log(failedServices);
+    failedServices =failedServices.map(service=> {
+        return {status:service.status,value:service.reason}
+    });
+    
     const htmlString = await ejs.renderFile("src/template/alert.ejs", {
-      serviceArr: allGoodServices,
+      serviceArr: [...failedServices,...allGoodServices],
     });
     const subject =
       "Hourly Staging Server Status Alert " +
@@ -170,7 +174,7 @@ startProcess();
 
 //Run this task every 6 hours every Day.
 cron.schedule(
-  "0 12 */6 * * *",
+  "0 28 */6 * * *",
   () => {
     console.log("Running this task Every 6 Hours at 10 minutes and 0 Seconds");
     console.log(new Date().toLocaleTimeString());

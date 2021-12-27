@@ -18,7 +18,7 @@ export const checkOnlineStatus = async (url,serviceName) => {
                     reject(new CreateResponse(serviceName,'Stopped'));
                     break;
                 default:
-                    reject(new CreateResponse(serviceName,'Running'))
+                    reject(new CreateResponse(serviceName,'Stopped'))
             }
         })
         .catch((error)=>{
