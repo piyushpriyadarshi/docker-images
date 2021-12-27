@@ -172,7 +172,7 @@ startProcess();
 
 //Run this task every 6 hours every Day.
 cron.schedule(
-  "0 28 */6 * * *",
+  "0 10 11 * * *",
   () => {
     console.log("Running this task Every 6 Hours at 10 minutes and 0 Seconds");
     console.log(new Date().toLocaleTimeString());
