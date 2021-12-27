@@ -31,14 +31,22 @@
         <th>Services</th>
         <th>Status</th>
       </tr>
-      <% serviceArr.forEach(function(service) {%>
-      <tr class="<%= service.status=== 'running' ? 'success' : 'danger' %>">
-        <td>
-          <%= service.name %>
-        </td>
-        <td><%= service.status %></td>
+      <% serviceArr.forEach(function(service) {%> <%
+      if(service?.value?.serviceName){ %>
+      <tr
+        class="<%= service.value.status === 'Running' ? 'success' : 'danger' %>"
+      >
+        <td><%= service.value.serviceName %></td>
+        <td><%= service.value.status %></td>
       </tr>
-      <% }); %>
+      <% } %> <% }); %>
     </table>
+
+    <ul>
+      <li>CPU Count : <%= serviceArr[serviceArr.length-1].value.cpuCount %></li>
+      <li>Total Memory : <%= serviceArr[serviceArr.length-1].value.totalMemory %></li>
+      <li>Free Memory : <%= serviceArr[serviceArr.length-1].value.freeMemory %></li>
+      <li>Up Time : <%= serviceArr[serviceArr.length-1].value.upTime %></li>
+    </ul>
   </body>
 </html>
