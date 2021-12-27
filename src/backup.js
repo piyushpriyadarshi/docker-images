@@ -2,12 +2,10 @@ import cp from "child_process";
 import os from "os";
 import dotenv from "dotenv";
 import ejs from "ejs";
-import sgmail from "@sendgrid/mail";
 import diskspace from "./discspace/index.js";
 import { checkOnlineStatus, getData } from "./utils/apiUtils.js";
 import cron from "node-cron";
 import { sendAlertMail } from "./mailer/mailUtils.js";
-import { fail } from "assert";
 dotenv.config();
 
 // console.log(process.env.DATABASE_PASSWORD);
