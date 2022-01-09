@@ -3,10 +3,10 @@ import { checkSatatusAndSendAlert } from "./jobs/checkServicesOnlineStatus.js";
 import takeMysqlBackup from "./jobs/Mysqlbackup.js";
 
 
-nodeCron.schedule('0 02 10 * * *',()=>{
+nodeCron.schedule('0 0 */6 * * *',()=>{
     checkSatatusAndSendAlert();
 });
 
-nodeCron.schedule('0 32 10 * * *',()=>{
+nodeCron.schedule('0 0 4 * * *',()=>{
     takeMysqlBackup();
 });
