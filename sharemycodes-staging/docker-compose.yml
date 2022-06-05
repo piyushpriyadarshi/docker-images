@@ -8,8 +8,12 @@ services:
       - "3000:3000"
     environment:
       - REDIS_URL=redis://cache
-      - APP_ENV=staging
+      - NEXT_PUBLIC_APP_ENV=staging
+      - NEXT_PUBLIC_SERVER=staging
       - DOCKER_ENABLE=true
+      - NEXTAUTH_URL=https://staging.sharemycodes.com
+      # - NEXTAUTH_URL=http://localhost:3000
+
     deploy:
       mode: replicated
       replicas: 1
