@@ -1,0 +1,53 @@
+version: "3"
+services:
+  #frontend-service
+  frontend-service:
+    image: frontendservicesharemycodes
+    container_name: frontendservicesharemycodes
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_URL=redis://cache
+      - APP_ENV=staging
+      - DOCKER_ENABLE=true
+    deploy:
+      mode: replicated
+      replicas: 1
+  ##notification-service
+  notification-service:
+    image: notificationservicesharemycodes
+    container_name: notificationservicesharemycodes
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
+    deploy:
+      mode: replicated
+      replicas: 2
+      labels: [APP=VOTING]
+  ##api
+  coding-backend:
+    image: apiservicesharemycodes
+    container_name: apiservicesharemycodes
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
+      - DOCKER_ENV=true
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=API]
+  ###Redis Container
+  redis:
+    image: redis:alpine
+    container_name: cache
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    restart: always
